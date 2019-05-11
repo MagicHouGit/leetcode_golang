@@ -1,3 +1,4 @@
+//移动零
 package main
 
 import "fmt"
