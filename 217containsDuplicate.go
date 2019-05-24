@@ -21,3 +21,15 @@ func containsDuplicate(nums []int) bool {
 	}
 	return false
 }
+
+// 此方法来自leetcode
+// func containsDuplicate(nums []int) bool {
+// 	m := make(map[int]bool)
+// 	for _, i := range nums {
+// 		if _, ok := m[i]; ok {
+// 			return true
+// 		}
+// 		m[i] = true
+// 	}
+//  	return false
+// }
