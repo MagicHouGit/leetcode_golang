@@ -37,6 +37,8 @@ type ListNode struct {
 	Next *ListNode
 }
 
+// 执行用时 :4 ms, 在所有 Go 提交中击败了64.58%的用户
+// 内存消耗 :2.3 MB, 在所有 Go 提交中击败了6.22%的用户
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	//链表只有一个元素
 	if head.Next == nil {
@@ -93,6 +95,43 @@ func (NodeA *ListNode) addNode(node *ListNode) {
 		tmpNode.Next = node
 	}
 
+}
+
+//leetcode上别人的方法学习一下
+
+// 删除链表的倒数第n个结点
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	if head == nil || n == 0 {
+		return nil
+	}
+
+	// 采用先后指针，first先走n个结点，next再开始走，直到first到达尾部
+	first, next := head, head
+
+	// first向前走n个结点
+	for n > 0 && first != nil {
+		first = first.Next
+		n--
+	}
+	// 如果链表长度不足n，则返回
+	if n > 0 {
+		return head
+	}
+	// 如果链表长度恰好为n，则删除头结点
+	if first == nil {
+		return head.Next
+	}
+
+	// 让first多走一步，使得next指向该删除的结点的前一个，便于删除
+	first = first.Next
+	for first != nil {
+		first = first.Next
+		next = next.Next
+	}
+	// 删除next此时的后一个结点
+	next.Next = next.Next.Next
+
+	return head
 }
 
 // func addNodeN(n int){
