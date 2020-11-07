@@ -1,9 +1,13 @@
-//21合并两个有效链表
+// 21. 合并两个有序链表
+// 将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
 
+// 示例：
+
+// 输入：1->2->4, 1->3->4
+// 输出：1->1->2->3->4->4
 
 //执行用时 :4 ms, 在所有 Go 提交中击败了81.10%的用户
 //内存消耗 :2.6 MB, 在所有 Go 提交中击败了60.05%的用户
-
 
 package main
 
@@ -46,30 +50,28 @@ func main() {
 
 	tmp1 := &p1
 	for tmp1.Next != nil {
-		fmt.Printf("Val:%d\n",tmp1.Val)
+		fmt.Printf("Val:%d\n", tmp1.Val)
 		tmp1 = tmp1.Next
 	}
-	fmt.Printf("Val:%d\n",tmp1.Val)
-	
+	fmt.Printf("Val:%d\n", tmp1.Val)
+
 	p2.makeNodeLength2(3)
 
 	// var tmp2 *ListNode
 	// tmp2 = reverseList(&p1)
 	tmp2 := &p2
 	for tmp2.Next != nil {
-		fmt.Printf("Val:%d\n",tmp2.Val)
+		fmt.Printf("Val:%d\n", tmp2.Val)
 		tmp2 = tmp2.Next
 	}
-	fmt.Printf("Val:%d\n",tmp2.Val)
+	fmt.Printf("Val:%d\n", tmp2.Val)
 
-
-
-	tmp3 := mergeTwoLists(&p1,&p2)
+	tmp3 := mergeTwoLists(&p1, &p2)
 	for tmp3.Next != nil {
-		fmt.Printf("Val:%d\n",tmp3.Val)
+		fmt.Printf("Val:%d\n", tmp3.Val)
 		tmp3 = tmp3.Next
 	}
-	fmt.Printf("Val:%d\n",tmp3.Val)
+	fmt.Printf("Val:%d\n", tmp3.Val)
 }
 
 type ListNode struct {
@@ -79,9 +81,9 @@ type ListNode struct {
 
 func reverseList(head *ListNode) *ListNode {
 	var tmpNode *ListNode
-	if head == nil || head.Next == nil{
+	if head == nil || head.Next == nil {
 		return head
-	}else{
+	} else {
 		tmpNode = reverseList(head.Next)
 		head.Next.Next = head
 		head.Next = nil
@@ -90,27 +92,25 @@ func reverseList(head *ListNode) *ListNode {
 }
 
 func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
-	if l1 == nil{
+	if l1 == nil {
 		return l2
 	}
-	if l2 == nil{
+	if l2 == nil {
 		return l1
 	}
-	if l1.Val <= l2.Val{
-		
-		l1.Next = mergeTwoLists(l1.Next,l2)
+	if l1.Val <= l2.Val {
+
+		l1.Next = mergeTwoLists(l1.Next, l2)
 		// l1.Next = l2
 		return l1
-	}else{
+	} else {
 
-		l2.Next = mergeTwoLists(l1,l2.Next)
+		l2.Next = mergeTwoLists(l1, l2.Next)
 		// l2.Next = l1
 		return l2
 	}
 
 }
-
-
 
 func deleteNode(node *ListNode) {
 	var tempNode *ListNode
@@ -131,32 +131,32 @@ func (NodeA *ListNode) addNode(node *ListNode) {
 	}
 
 }
-func (NodeA *ListNode) makeNodeLength(n int){
-    if n<=1 {
-		return 
+func (NodeA *ListNode) makeNodeLength(n int) {
+	if n <= 1 {
+		return
 	}
 	var point *ListNode
 	// var newNode *ListNode
 	point = NodeA
-	for i:=2;i<=n;i++{
-		// newNode.Val = n       
-		newNode := ListNode{Val:i}
-		for point.Next != nil{
+	for i := 2; i <= n; i++ {
+		// newNode.Val = n
+		newNode := ListNode{Val: i}
+		for point.Next != nil {
 
-			point= point.Next
+			point = point.Next
 		}
-        point.Next = &newNode
+		point.Next = &newNode
 	}
 }
-func (NodeA *ListNode) makeNodeLength2(n int){
-	if n<=1 {
-		return 
+func (NodeA *ListNode) makeNodeLength2(n int) {
+	if n <= 1 {
+		return
 	}
 	var point *ListNode
 	point = NodeA
-	for i:=2;i<=n;i++{
-		newNode := ListNode{Val:i*2}
-		for point.Next != nil{
+	for i := 2; i <= n; i++ {
+		newNode := ListNode{Val: i * 2}
+		for point.Next != nil {
 			point = point.Next
 		}
 		point.Next = &newNode
