@@ -14,12 +14,26 @@ package main
 import "fmt"
 
 func main() {
-	t_nums := []int{2, 11, 5, 6}
-	t_target := 16
-	reNums := TwoSum(t_nums, t_target)
+	// t_nums := []int{2, 11, 5, 6}
+	// t_nums := []int{7, 11, 15, 2}
+	t_nums := []int{3, 2, 4}
+	// t_target := 9
+	t_target := 6
+	reNums := twoSum(t_nums, t_target)
 	for _, v := range reNums {
 		fmt.Printf("%d\n", v)
 	}
+}
+func twoSum(nums []int, target int) []int {
+	cache := make(map[int]int)
+	// cache[target-nums[0]] = 0
+	for i := 0; i < len(nums); i++ {
+		if _, ok := cache[nums[i]]; ok {
+			return []int{cache[nums[i]], i}
+		}
+		cache[target-nums[i]] = i
+	}
+	return nil
 }
 
 // //执行用时 : 92 ms, 在Two Sum的Go提交中击败了14.22% 的用户
@@ -42,13 +56,13 @@ func main() {
 // }
 
 //这个来自leecode的方法
-func TwoSum(nums []int, target int) []int {
-	m := make(map[int]int)
-	for i, n := range nums {
-		if j, ok := m[n]; ok {
-			return []int{j, i}
-		}
-		m[target-n] = i
-	}
-	return []int{}
-}
+// func TwoSum(nums []int, target int) []int {
+// 	m := make(map[int]int)
+// 	for i, n := range nums {
+// 		if j, ok := m[n]; ok {
+// 			return []int{j, i}
+// 		}
+// 		m[target-n] = i
+// 	}
+// 	return []int{}
+// }
