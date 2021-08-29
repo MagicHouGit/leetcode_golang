@@ -11,7 +11,13 @@
 // 输出：[[1]]
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+
+	// _ "net/http/pprof"
+	_ "runtime/pprof"
+)
 
 func main() {
 	// testNum := []int{1, 2, 3}
@@ -23,6 +29,21 @@ func main() {
 	fmt.Println(testNum)
 	fmt.Println(permute(testNum))
 	// fmt.Println(chaban(7, 1, testNum1))
+	// go func() {
+	// 	err := http.ListenAndServe(":6060", nil)
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+	// }()
+	// go func() {
+	// for {
+
+	// log.Println(http.ListenAndServe("localhost:6060", nil))
+	go func() {
+		http.ListenAndServe("0.0.0.0:6060", nil)
+	}()
+	// }
+	// }()
 }
 
 // 插板法，
