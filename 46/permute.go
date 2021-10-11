@@ -13,7 +13,6 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 
 	// _ "net/http/pprof"
 	_ "runtime/pprof"
@@ -22,93 +21,100 @@ import (
 func main() {
 	// testNum := []int{1, 2, 3}
 	// testNum := []int{1, 2}
-	// testNum := []int{0, 1}
+	testNum := []int{0, 1}
 	// testNum := []int{1}
-	testNum := []int{1, 2, 3, 4}
-	// testNum1 := []int{1}
+	// testNum := []int{1, 2, 3, 4}
 	fmt.Println(testNum)
 	fmt.Println(permute(testNum))
 	// fmt.Println(chaban(7, 1, testNum1))
-	// go func() {
-	// 	err := http.ListenAndServe(":6060", nil)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// }()
-	// go func() {
-	// for {
 
-	// log.Println(http.ListenAndServe("localhost:6060", nil))
-	go func() {
-		http.ListenAndServe("0.0.0.0:6060", nil)
-	}()
-	// }
-	// }()
 }
 
-// 插板法，
+// // 插板法，
 
-// 这晦涩难懂的东西我都不知道该怎么写注释，
-// 2021-7-18，这代码明天我看看不懂了
-func permute(nums []int) [][]int {
-	var res [][]int
-	res = append(res, append([]int(nil), nums[0]))
-	if len(nums) == 1 {
-		return res
-	}
-	// l 1,2,3,4
-	//   0,1,2,3
-	cont := 1
-	l := len(nums)
-	for i := 1; i < l; i++ {
-		cont = cont * i
-		for ii := 0; ii < cont; ii++ {
-			for iii := 0; iii < i+1; iii++ {
-				res = append(res, chaban(nums[i], iii, res[0]))
-			}
-			res = res[1:]
-		}
-	}
-	return res
-}
-
-// c 要插的数字，site 要插的位置，被插的数组
-func chaban(c int, site int, sle []int) []int {
-	l := len(sle)
-	if site == l+1 {
-		sle = append(sle, c)
-	}
-	sle = append(sle, sle[l-1])
-	for i := l; i > site; i-- {
-		sle[i] = sle[i-1]
-	}
-	if site < len(sle) {
-		sle[site] = c
-	}
-	//出现地址重复，24组【4，4，4，4】
-	res := make([]int, len(sle))
-	copy(res, sle)
-	return res
-}
-
+// // 这晦涩难懂的东西我都不知道该怎么写注释，
+// // 2021-7-18，这代码明天我看看不懂了
 // func permute(nums []int) [][]int {
+// 	var res [][]int
+// 	res = append(res, append([]int(nil), nums[0]))
 // 	if len(nums) == 1 {
-// 		return [][]int{nums}
+// 		return res
 // 	}
-
-// 	res := [][]int{}
-
-// 	for i, num := range nums {
-// 		// 把num从 nums 拿出去 得到tmp
-// 		tmp := make([]int, len(nums)-1)
-// 		copy(tmp[0:], nums[0:i])
-// 		copy(tmp[i:], nums[i+1:])
-
-// 		// sub 是把num 拿出去后，数组中剩余数据的全排列
-// 		sub := permute(tmp)
-// 		for _, s := range sub {
-// 			res = append(res, append(s, num))
+// 	// l 1,2,3,4
+// 	//   0,1,2,3
+// 	cont := 1
+// 	l := len(nums)
+// 	for i := 1; i < l; i++ {
+// 		cont = cont * i
+// 		for ii := 0; ii < cont; ii++ {
+// 			for iii := 0; iii < i+1; iii++ {
+// 				res = append(res, chaban(nums[i], iii, res[0]))
+// 			}
+// 			res = res[1:]
 // 		}
 // 	}
 // 	return res
 // }
+
+// // c 要插的数字，site 要插的位置，被插的数组
+// func chaban(c int, site int, sle []int) []int {
+// 	l := len(sle)
+// 	if site == l+1 {
+// 		sle = append(sle, c)
+// 	}
+// 	sle = append(sle, sle[l-1])
+// 	for i := l; i > site; i-- {
+// 		sle[i] = sle[i-1]
+// 	}
+// 	if site < len(sle) {
+// 		sle[site] = c
+// 	}
+// 	//出现地址重复，24组【4，4，4，4】
+// 	res := make([]int, len(sle))
+// 	copy(res, sle)
+// 	return res
+// }
+
+//=========================================
+// 2021-8-29 前几天面试被问到了这题，我居然完全不记得自己一个月之前做过
+// 当着面试官的面，真的很难想出来，当时说了回溯算法，需要用递归或者栈来做
+// 那么今天来用递归的办法做一下吧
+// 执行用时：0 ms, 在所有 Go 提交中击败了100.00%的用户
+// 内存消耗：2.7 MB, 在所有 Go 提交中击败了20.66%的用户
+// 递归这个速度可以啊
+func permute(nums []int) [][]int {
+	var part [][]int
+	var res [][]int
+	if len(nums) > 1 {
+		part = permute(nums[1:])
+	} else if len(nums) == 0 {
+		return nil
+	} else {
+		res = append(res, nums)
+		return res
+	}
+	l := len(part)
+	ll := len(part[0])
+	for i := 0; i < l; i++ {
+		for ii := 0; ii < ll+1; ii++ {
+			temp := []int{}
+			if ii == 0 {
+				temp = append(temp, nums[0])
+				temp = append(temp, part[i]...)
+				res = append(res, temp)
+				continue
+			}
+			if ii == ll {
+				temp = append(temp, part[i]...)
+				temp = append(temp, nums[0])
+				res = append(res, temp)
+				continue
+			}
+			temp = append(temp, part[i][:ii]...)
+			temp = append(temp, nums[0])
+			temp = append(temp, part[i][ii:]...)
+			res = append(res, temp)
+		}
+	}
+	return res
+}
