@@ -33,34 +33,53 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 func main() {
 	nums := []int{0, 1, 0, 0}
 	fmt.Println(dominantIndex(nums))
 }
-func dominantIndex(nums []int) int {
 
-	l := len(nums)
-	if l == 1 {
-		return 0
+func dominantIndex(nums []int) int {
+	max1 := 0
+	max2 := 0
+	res := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] > max2 {
+			max2 = nums[i]
+			if max2 > max1 {
+				max2, max1 = max1, max2
+				res = i
+			}
+		}
 	}
-	if l == 0 {
+	if 2*max2 > max1 {
 		return -1
 	}
-	res := 0
-	max := nums[res]
-	for i := 0; i < l; i++ {
-		if nums[i] > max {
-			res = i
-			max = nums[i]
-		}
-
-	}
-	sort.Ints(nums)
-	if nums[l-2]*2 <= nums[l-1] {
-		return res
-	}
-	return -1
+	return res
 }
+
+// func dominantIndex(nums []int) int {
+
+// 	l := len(nums)
+// 	if l == 1 {
+// 		return 0
+// 	}
+// 	if l == 0 {
+// 		return -1
+// 	}
+// 	res := 0
+// 	max := nums[res]
+// 	for i := 0; i < l; i++ {
+// 		if nums[i] > max {
+// 			res = i
+// 			max = nums[i]
+// 		}
+
+// 	}
+// 	sort.Ints(nums)
+// 	if nums[l-2]*2 <= nums[l-1] {
+// 		return res
+// 	}
+// 	return -1
+// }
