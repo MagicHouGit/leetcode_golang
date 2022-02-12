@@ -34,6 +34,8 @@ func main() {
 //============================
 //2022-02-11
 //2022-02-12
+// 执行用时：0 ms, 在所有 Go 提交中击败了100.00%的用户
+// 内存消耗：2.6 MB, 在所有 Go 提交中击败了89.91%的用户
 func permute(nums []int) [][]int {
 	res := [][]int{}
 	var backTrack func(subset []int, l int, nums []int)
