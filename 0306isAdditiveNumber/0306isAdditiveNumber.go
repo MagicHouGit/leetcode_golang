@@ -178,6 +178,8 @@ func inversed(s []byte) []byte {
 // }
 
 //============================
+//other
+//backTrack
 // func isAdditiveNumber(num string) bool {
 // 	var isCanAdded func(num string, first, second, sumIdx int) bool
 // 	isCanAdded = func(num string, first, second, sumIdx int) bool {
